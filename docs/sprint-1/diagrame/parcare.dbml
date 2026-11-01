@@ -1,0 +1,173 @@
+// Sistem automatizat de gestiune a parcarii - model ORM (Sprint 1)
+// Lipeste acest cod in https://dbdiagram.io
+
+Enum tip_zona {
+  ABONATI
+  OCAZIONALI
+}
+
+Enum tip_loc {
+  STANDARD
+  DIZABILITATI
+}
+
+Enum stare_loc {
+  LIBER
+  OCUPAT
+}
+
+Enum tip_zi {
+  LUCRATOARE
+  WEEKEND
+  EVENIMENT
+}
+
+Enum tip_perioada {
+  INTERVAL_30_MIN
+  ZI
+  SAPTAMANA
+}
+
+Enum stare_sesiune {
+  ACTIVA
+  INCHISA
+}
+
+Enum metoda_plata {
+  CARD
+  NUMERAR
+}
+
+Enum canal_plata {
+  TONOMAT
+  APLICATIE
+}
+
+Enum stare_plata {
+  REUSITA
+  ESUATA
+}
+
+Enum stare_abonament {
+  ACTIV
+  EXPIRAT
+}
+
+Enum tip_notificare {
+  LOC_OCUPAT_INCORECT
+  PLATA_ESUATA
+  MURDARIE
+}
+
+// ---------- Agregat Parcare ----------
+
+Table parcare {
+  id bigint [pk, increment]
+  nume varchar [not null]
+  adresa varchar [not null]
+  capacitate int [not null, note: '> 0, egala cu suma locurilor din zone']
+  prag_murdarie int [not null, note: 'intre 0 si 100']
+  data_creare timestamp
+  data_modificare timestamp
+}
+
+Table zona {
+  id bigint [pk, increment]
+  id_parcare bigint [not null, ref: > parcare.id]
+  cod varchar [not null]
+  tip tip_zona [not null]
+  nr_locuri int [not null]
+}
+
+Table loc_parcare {
+  id bigint [pk, increment]
+  id_zona bigint [not null, ref: > zona.id]
+  numar int [not null, unique]
+  tip tip_loc [not null]
+  stare stare_loc [not null]
+}
+
+Table tarif {
+  id bigint [pk, increment]
+  id_parcare bigint [not null, ref: > parcare.id]
+  tip_zi tip_zi [not null]
+  pret_30_min decimal(10,2) [not null]
+  pret_zi decimal(10,2) [not null]
+  pret_saptamana decimal(10,2) [not null]
+  pret_abonament decimal(10,2) [not null]
+
+  indexes {
+    (id_parcare, tip_zi) [unique]
+  }
+}
+
+Table zi_speciala {
+  id bigint [pk, increment]
+  id_parcare bigint [not null, ref: > parcare.id]
+  data date [not null]
+  denumire varchar [not null]
+}
+
+// ---------- Agregat SesiuneParcare ----------
+
+Table sesiune_parcare {
+  id bigint [pk, increment]
+  nr_auto varchar [not null]
+  ora_intrare timestamp [not null]
+  valabil_pana timestamp
+  ora_iesire timestamp
+  tip_perioada tip_perioada
+  stare stare_sesiune [not null]
+  id_loc bigint [ref: > loc_parcare.id]
+  data_creare timestamp
+  data_modificare timestamp
+}
+
+Table plata {
+  id bigint [pk, increment]
+  id_sesiune bigint [not null, ref: > sesiune_parcare.id]
+  suma decimal(10,2) [not null]
+  metoda metoda_plata [not null]
+  canal canal_plata [not null]
+  stare stare_plata [not null]
+  data timestamp [not null]
+}
+
+// ---------- Agregat Abonament ----------
+
+Table abonament {
+  id bigint [pk, increment]
+  nr_auto varchar [not null]
+  id_loc bigint [not null, unique, ref: - loc_parcare.id]
+  reinnoire_automata boolean [not null]
+  stare stare_abonament [not null]
+  data_creare timestamp
+  data_modificare timestamp
+}
+
+Table perioada_abonament {
+  id bigint [pk, increment]
+  id_abonament bigint [not null, ref: > abonament.id]
+  data_inceput date [not null]
+  data_sfarsit date [not null, note: 'cel mult o luna dupa data_inceput']
+  suma decimal(10,2) [not null]
+  stare stare_plata [not null]
+}
+
+// ---------- Agregat Vehicul ----------
+
+Table vehicul {
+  id bigint [pk, increment]
+  nr_auto varchar [not null, unique]
+  card_dizabilitati_pana date
+}
+
+// ---------- Agregat Notificare ----------
+
+Table notificare {
+  id bigint [pk, increment]
+  tip tip_notificare [not null]
+  mesaj varchar [not null]
+  data timestamp [not null]
+  rezolvata boolean [not null, default: false]
+}
