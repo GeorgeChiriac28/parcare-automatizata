@@ -23,7 +23,7 @@ Enum tip_zi {
 }
 
 Enum tip_perioada {
-  INTERVAL_30_MIN
+  ORA
   ZI
   SAPTAMANA
 }
@@ -91,7 +91,7 @@ Table tarif {
   id bigint [pk, increment]
   id_parcare bigint [not null, ref: > parcare.id]
   tip_zi tip_zi [not null]
-  pret_30_min decimal(10,2) [not null]
+  pret_ora decimal(10,2) [not null]
   pret_zi decimal(10,2) [not null]
   pret_saptamana decimal(10,2) [not null]
   pret_abonament decimal(10,2) [not null]
