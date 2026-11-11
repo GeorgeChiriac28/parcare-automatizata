@@ -12,7 +12,7 @@ import java.util.List;
 
 // Entitatea root a agregatului Abonament.
 // Fiecare luna platita este o PerioadaAbonament.
-public class Abonament {
+public class Abonament implements Auditabil {
 
     private Long id;
 
@@ -110,6 +110,7 @@ public class Abonament {
         return dataCreare;
     }
 
+    @Override
     public void setDataCreare(LocalDateTime dataCreare) {
         this.dataCreare = dataCreare;
     }
@@ -118,6 +119,7 @@ public class Abonament {
         return dataModificare;
     }
 
+    @Override
     public void setDataModificare(LocalDateTime dataModificare) {
         this.dataModificare = dataModificare;
     }

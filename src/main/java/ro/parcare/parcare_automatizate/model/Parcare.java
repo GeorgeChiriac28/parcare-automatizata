@@ -14,7 +14,7 @@ import java.util.List;
 
 // Entitatea root a agregatului Parcare.
 // Zonele, tarifele si zilele speciale se adauga doar prin parcare.
-public class Parcare {
+public class Parcare implements Auditabil {
 
     private Long id;
 
@@ -66,6 +66,30 @@ public class Parcare {
 
     public void adaugaZiSpeciala(ZiSpeciala ziSpeciala) {
         zileSpeciale.add(ziSpeciala);
+    }
+
+    // cauta un loc dupa id; intoarce null daca nu exista
+    public LocParcare gasesteLoc(Long idLoc) {
+        for (Zona zona : zone) {
+            for (LocParcare loc : zona.getLocuri()) {
+                if (loc.getId().equals(idLoc)) {
+                    return loc;
+                }
+            }
+        }
+        return null;
+    }
+
+    // cauta un loc dupa numarul scris pe el; intoarce null daca nu exista
+    public LocParcare gasesteLocDupaNumar(int numar) {
+        for (Zona zona : zone) {
+            for (LocParcare loc : zona.getLocuri()) {
+                if (loc.getNumar() == numar) {
+                    return loc;
+                }
+            }
+        }
+        return null;
     }
 
     // view calculat (regula C5): cate locuri libere sunt intr-un tip de zona
@@ -155,6 +179,7 @@ public class Parcare {
         return dataCreare;
     }
 
+    @Override
     public void setDataCreare(LocalDateTime dataCreare) {
         this.dataCreare = dataCreare;
     }
@@ -163,6 +188,7 @@ public class Parcare {
         return dataModificare;
     }
 
+    @Override
     public void setDataModificare(LocalDateTime dataModificare) {
         this.dataModificare = dataModificare;
     }

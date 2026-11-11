@@ -12,7 +12,7 @@ import java.util.List;
 
 // Entitatea root a agregatului SesiuneParcare.
 // O sesiune incepe cand masina intra si se inchide cand iese.
-public class SesiuneParcare {
+public class SesiuneParcare implements Auditabil {
 
     private Long id;
 
@@ -137,6 +137,7 @@ public class SesiuneParcare {
         return dataCreare;
     }
 
+    @Override
     public void setDataCreare(LocalDateTime dataCreare) {
         this.dataCreare = dataCreare;
     }
@@ -145,6 +146,7 @@ public class SesiuneParcare {
         return dataModificare;
     }
 
+    @Override
     public void setDataModificare(LocalDateTime dataModificare) {
         this.dataModificare = dataModificare;
     }
