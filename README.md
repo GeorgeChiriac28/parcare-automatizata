@@ -1,48 +1,45 @@
-# Sprint 2 – Business Model Implementation
+# Sistem automatizat de gestiune a parcării
 
-Implementarea în Java și Spring Boot a modelului de domeniu și a regulilor de business din [Sprint 1](../sprint-1/README.md).
+Proiect pentru disciplina MSD – aplicație de business pentru o parcare auto complet automatizată, fără personal și fără tichete de hârtie.
 
-Tot codul se află în `src/main/java/ro/parcare/parcare_automatizate/`, iar testele în `src/test/java/ro/parcare/parcare_automatizate/`.
+Vehiculele sunt identificate după numărul de înmatriculare, citit de camere la intrare și la ieșire. Parcarea are o zonă pentru abonați (cu locuri rezervate), o zonă pentru șoferii ocazionali și locuri pentru persoane cu dizabilități. Șoferii plătesc la tonomat sau în aplicația mobilă, iar administratorul primește notificări și rapoarte.
 
-## Livrabile cerute și unde se găsesc
+## Stadiul proiectului
 
-| Livrabil | Unde |
-| --- | --- |
-| Clase de entități | `model/` – 11 entități: `Parcare`, `Zona`, `LocParcare`, `Tarif`, `ZiSpeciala`, `SesiuneParcare`, `Plata`, `Abonament`, `PerioadaAbonament`, `Vehicul`, `Notificare` |
-| Value objects | `model/NumarInmatriculare` și cele 11 enumerări din `enums/` |
-| Validări JavaBean (adnotări) | În entități: `@NotNull`, `@NotBlank`, `@Positive`, `@Min`, `@Max`, `@AssertTrue` (regulile V1–V8) |
-| Factory-uri pentru agregate | `factory/` – `ParcareFactory`, `SesiuneFactory`, `AbonamentFactory` (interfață + implementare) |
-| Servicii de workflow | `service/ParcareWorkflowService` (UC1–UC4), `service/AbonamentWorkflowService` (UC5), `service/AdministrareWorkflowService` (UC6–UC8) |
-| Serviciu de validare | `service/ValidareService` – regulile pe agregate A1–A8, plus V2 și V3 |
-| Serviciu de calcul | `service/CalculService` – regulile C1–C7 (facturare pe ore, plafon pe zi, taxă de întârziere, rapoarte) |
-| Serviciu de audit | `service/AuditService` și interfața `model/Auditabil` |
-| Clasă de configurare Spring | `config/AppConfig` |
-| Teste JUnit | `src/test/java/...` – 68 de teste |
-
-## Agregate
-
-| Agregat | Entitate root | Componente |
+| Sprint | Tema | Stadiu |
 | --- | --- | --- |
-| Parcare | `Parcare` | `Zona` cu `LocParcare`, `Tarif`, `ZiSpeciala` |
-| SesiuneParcare | `SesiuneParcare` | `Plata` |
-| Abonament | `Abonament` | `PerioadaAbonament` |
-| Vehicul | `Vehicul` | – |
-| Notificare | `Notificare` | – |
+| Sprint 1 | Business Domain Design – use case-uri, model de domeniu, reguli de business | Finalizat |
+| Sprint 2 | Business Model Implementation – entități Java, servicii, teste JUnit | În lucru |
+| Sprint 3 | Persistence Model Implementation – JPA, repository-uri Spring | Planificat |
 
-## Teste
+## Structura repository-ului
 
-| Clasă de test | Ce verifică |
-| --- | --- |
-| `NumarInmatriculareTest` | Formatul numărului de înmatriculare (V1) |
-| `EntitatiTest` | Validările din entități (V2, V5–V8) și metodele simple din entități |
-| `FactoryTest` | Construirea agregatelor |
-| `CalculServiceTest` | Regulile de calcul C1–C7 |
-| `ValidareServiceTest` | Regulile de validare A1–A8, V2, V3 |
-| `ParcareWorkflowServiceTest` | Intrare, plată, ieșire, cele 15 minute de grație, taxa de întârziere |
-| `AbonamentWorkflowServiceTest` | Cumpărarea, reînnoirea și expirarea abonamentelor |
-| `AdministrareWorkflowServiceTest` | Senzori, notificări, tarife, zile de eveniment, rapoarte |
-| `ParcareAutomatizateApplicationTests` | Pornirea aplicației Spring cu toate serviciile |
+```
+parcare-automatizata/
+├── README.md                     ← această pagină
+├── pom.xml                       ← configurarea proiectului Maven
+├── docs/
+│   └── sprint-1/                 ← documentația Sprint 1 (PDF + diagrama tabelelor)
+└── src/
+    ├── main/java/ro/parcare/parcare_automatizate/
+    │   ├── enums/                ← valorile fixe (stări, tipuri)
+    │   ├── model/                ← entitățile și value object-ul NumarInmatriculare
+    │   ├── factory/              ← construirea agregatelor
+    │   └── service/              ← regulile de business (calcul, validare, workflow)
+    └── test/java/...             ← testele JUnit
+```
 
-## Observație
+## Cum rulezi testele
 
-Până în Sprint 3 datele sunt ținute în liste în memorie, iar id-urile sunt date de factory-uri. În Sprint 3 vor fi înlocuite cu persistența JPA și repository-uri Spring.
+Deschide proiectul în IntelliJ IDEA (Java 21), apoi clic dreapta pe proiect → **Run 'All Tests'**.
+
+## Tehnologii
+
+- Java, Spring Boot (Sprint 2–3)
+- JPA / Hibernate, Spring Data JPA (Sprint 3)
+- JUnit (teste)
+- UML pentru design, DBML ([dbdiagram.io](https://dbdiagram.io)) pentru diagrama tabelelor
+
+## Autor
+
+George – Sisteme Informaționale pentru Afaceri (SIA)
