@@ -9,7 +9,7 @@ Vehiculele sunt identificate după numărul de înmatriculare, citit de camere l
 | Sprint | Tema | Stadiu |
 | --- | --- | --- |
 | Sprint 1 | Business Domain Design – use case-uri, model de domeniu, reguli de business | Finalizat |
-| Sprint 2 | Business Model Implementation – entități Java, servicii, teste JUnit | În lucru |
+| Sprint 2 | Business Model Implementation – entități Java, servicii, teste JUnit | Finalizat |
 | Sprint 3 | Persistence Model Implementation – JPA, repository-uri Spring | Planificat |
 
 ## Structura repository-ului
@@ -19,13 +19,15 @@ parcare-automatizata/
 ├── README.md                     ← această pagină
 ├── pom.xml                       ← configurarea proiectului Maven
 ├── docs/
-│   └── sprint-1/                 ← documentația Sprint 1 (PDF + diagrama tabelelor)
+│   ├── sprint-1/                 ← documentația Sprint 1 (PDF + diagrama tabelelor)
+│   └── sprint-2/                 ← ce conține Sprint 2 și unde se află fiecare livrabil
 └── src/
     ├── main/java/ro/parcare/parcare_automatizate/
     │   ├── enums/                ← valorile fixe (stări, tipuri)
     │   ├── model/                ← entitățile și value object-ul NumarInmatriculare
     │   ├── factory/              ← construirea agregatelor
-    │   └── service/              ← regulile de business (calcul, validare, workflow)
+    │   ├── service/              ← regulile de business (calcul, validare, workflow, audit)
+    │   └── config/               ← configurarea Spring
     └── test/java/...             ← testele JUnit
 ```
 
