@@ -1,45 +1,23 @@
-# Sistem automatizat de gestiune a parcării
+# Sprint 1 – Business Domain Design
 
-Proiect pentru disciplina MSD – aplicație de business pentru o parcare auto complet automatizată, fără personal și fără tichete de hârtie.
+Documentația completă se află în **[Sprint1-Business-Domain-Design.pdf](Sprint1-Business-Domain-Design.pdf)**.
 
-Vehiculele sunt identificate după numărul de înmatriculare, citit de camere la intrare și la ieșire. Parcarea are o zonă pentru abonați (cu locuri rezervate), o zonă pentru șoferii ocazionali și locuri pentru persoane cu dizabilități. Șoferii plătesc la tonomat sau în aplicația mobilă, iar administratorul primește notificări și rapoarte.
+## Ce conține
 
-## Stadiul proiectului
+1. **Introducere** – scopul sistemului și ce acoperă acest sprint
+2. **Actori și cerințe de business** – 5 actori și 9 cerințe
+3. **Use case-uri** – diagrama de use case și descrierea celor 8 use case-uri
+4. **Fluxul de business** – diagrama de activitate pentru intrare, plată și ieșire
+5. **Modelul de domeniu** – diagrama de clase (5 agregate, 10 entități), value objects, enumerări și modelul ORM
+6. **Reguli de business** – reguli de validare (pe câmpuri și pe agregate), reguli de calcul, alte reguli și tarifele de referință
+7. **Limitări și dezvoltări viitoare**
 
-| Sprint | Tema | Stadiu |
-| --- | --- | --- |
-| Sprint 1 | Business Domain Design – use case-uri, model de domeniu, reguli de business | Finalizat |
-| Sprint 2 | Business Model Implementation – entități Java, servicii, teste JUnit | În lucru |
-| Sprint 3 | Persistence Model Implementation – JPA, repository-uri Spring | Planificat |
+## Livrabile cerute și unde se găsesc
 
-## Structura repository-ului
-
-```
-parcare-automatizata/
-├── README.md                     ← această pagină
-├── pom.xml                       ← configurarea proiectului Maven
-├── docs/
-│   └── sprint-1/                 ← documentația Sprint 1 (PDF + diagrama tabelelor)
-└── src/
-    ├── main/java/ro/parcare/parcare_automatizate/
-    │   ├── enums/                ← valorile fixe (stări, tipuri)
-    │   ├── model/                ← entitățile și value object-ul NumarInmatriculare
-    │   ├── factory/              ← construirea agregatelor
-    │   └── service/              ← regulile de business (calcul, validare, workflow)
-    └── test/java/...             ← testele JUnit
-```
-
-## Cum rulezi testele
-
-Deschide proiectul în IntelliJ IDEA (Java 21), apoi clic dreapta pe proiect → **Run 'All Tests'**.
-
-## Tehnologii
-
-- Java, Spring Boot (Sprint 2–3)
-- JPA / Hibernate, Spring Data JPA (Sprint 3)
-- JUnit (teste)
-- UML pentru design, DBML ([dbdiagram.io](https://dbdiagram.io)) pentru diagrama tabelelor
-
-## Autor
-
-George – Sisteme Informaționale pentru Afaceri (SIA)
+| Livrabil | Unde |
+| --- | --- |
+| Diagrame de use case | PDF, secțiunea 3 |
+| Diagramă de activitate | PDF, secțiunea 4 |
+| Diagrame de clase ale entităților | PDF, secțiunea 5 |
+| (extra) Diagramă SQL | [diagrame/parcare.dbml](diagrame/parcare.dbml) – se deschide pe [dbdiagram.io](https://dbdiagram.io) |
+| (extra) Specificația regulilor de business | PDF, secțiunea 6 |
